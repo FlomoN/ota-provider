@@ -11,15 +11,18 @@ import (
 type Watcher struct {
 	Repo      string
 	Device    string
+	ETag      string
 	ReleaseID int
+	Version   string
 }
 
 // Store saves the data object and stores additional information like github login and the list of monitored Releases
 type Store struct {
-	Init    bool
-	GhName  string
-	GhToken string
-	Watch   []Watcher
+	Init     bool
+	GhName   string
+	GhToken  string
+	MQTTHost string
+	Watch    []Watcher
 }
 
 // Load is loading the Store from json file
@@ -33,7 +36,7 @@ func Load() *Store {
 	if os.IsNotExist(err) {
 		os.Mkdir(filepath.Join(pwd, "./data"), 0777)
 		_f, _ := os.Create(filepath.Join(pwd, "./data/store.json"))
-		store = Store{false, "", "", []Watcher{}}
+		store = Store{false, "", "", "", []Watcher{}}
 		x, _ := json.Marshal(store)
 		_f.Write(x)
 		_f.Close()
@@ -60,8 +63,6 @@ func (s *Store) SetCreds(user string, token string) {
 
 func (s *Store) saveData() {
 	pwd, _ := os.Getwd()
-	_f, _ := os.Open(filepath.Join(pwd, "./data/store.json"))
 	x, _ := json.Marshal(s)
-	_f.Write(x)
-	_f.Close()
+	ioutil.WriteFile(filepath.Join(pwd, "./data/store.json"), x, 0777)
 }

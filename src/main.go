@@ -22,10 +22,14 @@ func main() {
 	})
 
 	r.POST("/add", func(c *gin.Context) {
-		requestBody := db.Watcher{}
+		type RepoEntry struct {
+			Repo   string
+			Device string
+		}
+		requestBody := RepoEntry{}
 		c.Bind(&requestBody)
 
-		store.Add(requestBody)
+		store.Add(db.Watcher{Repo: requestBody.Repo, Device: requestBody.Device, ETag: "", Version: "", ReleaseID: 0})
 		c.Status(200)
 	})
 
