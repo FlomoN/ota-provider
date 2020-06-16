@@ -66,3 +66,11 @@ func (s *Store) saveData() {
 	x, _ := json.Marshal(s)
 	ioutil.WriteFile(filepath.Join(pwd, "./data/store.json"), x, 0777)
 }
+
+//UpdateEIV updates etag, releaseid and version of the Watcher
+func (w *Watcher) UpdateEIV(s *Store, etag string, id int, version string) {
+	w.ETag = etag
+	w.ReleaseID = id
+	w.Version = version
+	s.saveData()
+}
