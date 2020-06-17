@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Login from "./components/Login";
+import "spectre.css";
+import Main from "./components/Main";
+import { get } from "./util/fetchHelper";
 
 function App() {
+  const [init, setInit] = useState(true);
+  const [repos, setRepos] = useState([]);
+
+  const fetchData = async () => {
+    const res = await (await get("/data")).json();
+    setInit(res.Init);
+    setRepos(res.Watch);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!init && <Login done={setInit} />}
+      {init && <Main repos={repos} refetch={fetchData} />}
     </div>
   );
 }

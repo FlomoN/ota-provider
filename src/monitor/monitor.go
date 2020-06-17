@@ -90,7 +90,7 @@ func createMQTTClient() *MQTT.Client {
 
 	c := MQTT.NewClient(opts)
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
-		panic(token.Error())
+		log.Println(token.Error())
 	}
 
 	c.Publish("ping", 0, false, "ota-updater")

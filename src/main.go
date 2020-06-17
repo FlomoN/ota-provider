@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/flomon/ota-provider/src/db"
 	"github.com/flomon/ota-provider/src/monitor"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +13,7 @@ func main() {
 	monitor.Init(store)
 
 	r := gin.Default()
+	r.Use(cors.Default())
 
 	r.GET("/", func(c *gin.Context) {
 		c.Redirect(301, "http://localhost:3000")
