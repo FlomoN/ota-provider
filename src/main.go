@@ -4,6 +4,7 @@ import (
 	"github.com/flomon/ota-provider/src/db"
 	"github.com/flomon/ota-provider/src/monitor"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,9 +16,9 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	r.GET("/", func(c *gin.Context) {
-		c.Redirect(301, "http://localhost:3000")
-	})
+	r.Use(static.Serve("/", static.LocalFile("./frontend/build", false)))
+
+	r.Use(static.Serve("/bin", static.LocalFile("./data", false)))
 
 	r.GET("/data", func(c *gin.Context) {
 		c.JSON(200, store)

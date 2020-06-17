@@ -14,7 +14,7 @@ export default function Main({ repos, refetch }) {
 
   const deleteHandler = async (key) => {
     const res = await post("/remove", { id: key });
-    if (res.status == 200) {
+    if (res.status === 200) {
       refetch();
     }
   };
@@ -26,7 +26,7 @@ export default function Main({ repos, refetch }) {
         Repo: repo,
         Device: device,
       });
-      if (res.status == 200) {
+      if (res.status === 200) {
         setLoading(false);
         setAdding(false);
         refetch();

@@ -24,7 +24,7 @@ export default function Login({ done }) {
         MQTT: broker,
       });
       setLoading(false);
-      if (res.status == 200) {
+      if (res.status === 200) {
         done(true);
       }
     }

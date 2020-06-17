@@ -1,4 +1,6 @@
-const server = "localhost:3001"; //window.location.hostname
+const server = window.location.host;
+
+console.log(window.location.host);
 
 export const get = async (path) => customFetch(path, "GET", undefined);
 
