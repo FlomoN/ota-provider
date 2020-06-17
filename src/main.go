@@ -47,11 +47,12 @@ func main() {
 		type GithubCreds struct {
 			Name string
 			Pass string
+			MQTT string
 		}
 
 		requestBody := GithubCreds{}
 		c.Bind(&requestBody)
-		store.SetCreds(requestBody.Name, requestBody.Pass)
+		store.SetCreds(requestBody.Name, requestBody.Pass, requestBody.MQTT)
 		c.Status(200)
 	})
 

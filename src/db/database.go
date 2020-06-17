@@ -62,9 +62,10 @@ func (s *Store) Remove(i int) {
 }
 
 // SetCreds sets the github user data and takes Store out of uninitialized state
-func (s *Store) SetCreds(user string, token string) {
+func (s *Store) SetCreds(user string, token string, mqtt string) {
 	s.GhName = user
 	s.GhToken = token
+	s.MQTTHost = mqtt
 	s.Init = true
 	s.saveData()
 }
