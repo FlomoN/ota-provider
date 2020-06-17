@@ -14,11 +14,21 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		c.String(200, "Hallo")
+		c.Redirect(301, "http://localhost:3000")
 	})
 
 	r.GET("/data", func(c *gin.Context) {
 		c.JSON(200, store)
+	})
+
+	r.POST("/remove", func(c *gin.Context) {
+		type DeleteInfo struct {
+			ID int `json:"id"`
+		}
+		requestBody := DeleteInfo{}
+		c.Bind(&requestBody)
+		store.Remove(requestBody.ID)
+		c.Status(200)
 	})
 
 	r.POST("/add", func(c *gin.Context) {

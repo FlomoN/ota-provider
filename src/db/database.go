@@ -53,6 +53,14 @@ func (s *Store) Add(w Watcher) {
 	s.saveData()
 }
 
+// Remove removes an Element from the Watch list
+func (s *Store) Remove(i int) {
+	copy(s.Watch[i:], s.Watch[i+1:])
+	s.Watch[len(s.Watch)-1] = Watcher{}
+	s.Watch = s.Watch[:len(s.Watch)-1]
+	s.saveData()
+}
+
 // SetCreds sets the github user data and takes Store out of uninitialized state
 func (s *Store) SetCreds(user string, token string) {
 	s.GhName = user
