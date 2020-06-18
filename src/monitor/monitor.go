@@ -68,7 +68,7 @@ func monitor(t <-chan time.Time) {
 						downloadContent, _ := ioutil.ReadAll(downloadResp.Body)
 
 						pwd, _ := os.Getwd()
-						binary, _ := os.Create(filepath.Join(pwd, "./data/"+w.Repo+".png"))
+						binary, _ := os.Create(filepath.Join(pwd, "./data/"+w.Repo+".bin"))
 						binary.Write(downloadContent)
 						binary.Close()
 
