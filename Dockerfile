@@ -15,6 +15,7 @@ FROM scratch
 WORKDIR /app
 COPY --from=node /app/main ./
 COPY --from=node /app/frontend/build/ ./frontend/build/
+COPY --from=node /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 EXPOSE 3001
 CMD ["/app/main"]
 #RUN bash
