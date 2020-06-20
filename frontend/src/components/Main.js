@@ -19,6 +19,10 @@ export default function Main({ repos, refetch }) {
     }
   };
 
+  const forceHandler = (key) => {
+    post("/force", { id: key });
+  };
+
   const addHandler = async () => {
     if (adding) {
       setLoading(true);
@@ -49,10 +53,16 @@ export default function Main({ repos, refetch }) {
           <div className="column col-2">
             <span className="version">{elem.Version}</span>
           </div>
-          <div className="column col-2 right">
+          <div className="column col-1 right">
             <i
               className="icon icon-delete"
               onClick={() => deleteHandler(index)}
+            ></i>
+          </div>
+          <div className="column col-1 force">
+            <i
+              className="icon icon-upload"
+              onClick={() => forceHandler(index)}
             ></i>
           </div>
         </div>

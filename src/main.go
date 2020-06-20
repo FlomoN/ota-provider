@@ -20,8 +20,20 @@ func main() {
 
 	r.Use(static.Serve("/bin", static.LocalFile("./data", false)))
 
+	//r.Static("/bin", "./data")
+
 	r.GET("/data", func(c *gin.Context) {
 		c.JSON(200, store)
+	})
+
+	r.POST("/force", func(c *gin.Context) {
+		type ForceInfo struct {
+			ID int `json:"id"`
+		}
+		requestBody := ForceInfo{}
+		c.Bind(&requestBody)
+		monitor.ForceDeviceUpdate(requestBody.ID)
+		c.Status(200)
 	})
 
 	r.POST("/remove", func(c *gin.Context) {

@@ -47,7 +47,8 @@ func monitor(t <-chan time.Time) {
 
 				resp, _err := client.Do(req)
 				if _err != nil {
-					log.Fatal("Error Reading Repo " + w.Repo)
+					fmt.Println("Error Reading Repo " + w.Repo)
+					panic(_err)
 				}
 				defer resp.Body.Close()
 				if resp.StatusCode == 200 {
@@ -82,6 +83,11 @@ func monitor(t <-chan time.Time) {
 		}
 		<-t
 	}
+}
+
+// ForceDeviceUpdate forces update to a device by user input
+func ForceDeviceUpdate(i int) {
+	(*mqttClient).Publish("update/"+store.Watch[i].Device, 2, false, "")
 }
 
 func createMQTTClient() *MQTT.Client {
